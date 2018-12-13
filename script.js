@@ -9,25 +9,28 @@ let direction = 2;
 let bodyparts = 1;
 let posXtemp;
 let posYtemp;
+let traveled = 0;
+let foodX;
+let foodY;
 
 let morphImgs = document.getElementById("morphID").getElementsByTagName("img");
 let foodImg = document.getElementById("julskinka");
 
-	
-function draw() {
-	/*
-	let fgImg = document.getElementById("fg-gfx");
-	let morphImg = document.getElementById("morph");
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+}
 
-	ctx.clearRect(0, 0, 640, 480);
-	ctx.drawImage(fgImg, imgX, 0, 640, 480);
-	ctx.drawImage(fgImg, (imgX + 640), 0, 640, 480);
+function spawnfood() {
+	foodX = getRandomInt(20) * 32;
+	foodY = getRandomInt(15) * 32;
 
-	ctx.drawImage(morphImg, morphX, morphY, morphWidth, morphHeight);
-	*/
+	ctx.drawImage(julskinka, foodX, foodY, 32, 32);
+}
+
+spawnfood();
 	
-	for (let i = 0; i < bodyparts; i++) {
-		if (direction == 1) {
+function draw() {	
+	if (direction == 1) {
 			morphY0 -= 32;
 		}
 		else if (direction == 2) {
@@ -40,21 +43,31 @@ function draw() {
 			morphX0 -= 32;
 		}
 
-		if (morphX0 > 640) {
+		if (morphX0 >= 640) {
 			morphX0 -= 640;
 		}
 		if (morphX0 < 0) {
 			morphX0 += 640;
 		}
-		if (morphY0 > 480) {
+		if (morphY0 >= 480) {
 			morphY0 -= 480;
 		}
 		if (morphY0 < 0) {
 			morphY0 += 480;
 		}
+	traveled++;
+
+	if (morphX0 == foodX && morphY0 == foodY) {
+			bodyparts++;
+			spawnfood();
+		}
+
+	for (let i = 0; i < bodyparts; i++) {
+		
 
 		ctx.clearRect(0, 0, 640, 480);
 		ctx.drawImage(morphImgs[i], morphX0, morphY0, 32, 32);
+		ctx.drawImage(julskinka, foodX, foodY, 32, 32);
 	}
 }
 
@@ -63,67 +76,79 @@ setInterval(function() {
 		}, 200);
 
 document.addEventListener("keydown", function(e) {
-	console.log(e.key)
+	//console.log(e.key)
 	;
 	switch(e.key) {
 		case "w":
-			if (direction != 3) {				
+			if (direction != 3 && traveled > 0) {				
 				direction = 1;
+				traveled = 0;
 			}
 		break;
 		case "d":
-			if (direction != 4) {				
+			if (direction != 4 && traveled > 0) {				
 				direction = 2;
+				traveled = 0;
 			}
 		break;
 		case "s":
-			if (direction != 1) {				
+			if (direction != 1 && traveled > 0) {				
 				direction = 3;
+				traveled = 0;
 			}
 		break;
 		case "a":
-			if (direction != 2) {				
+			if (direction != 2 && traveled > 0) {				
 				direction = 4;
+				traveled = 0;
 			}
 		break;
 		case "W":
-			if (direction != 3) {				
+			if (direction != 3 && traveled > 0) {				
 				direction = 1;
+				traveled = 0;
 			}
 		break;
 		case "D":
-			if (direction != 4) {				
+			if (direction != 4 && traveled > 0) {				
 				direction = 2;
+				traveled = 0;
 			}
 		break;
 		case "S":
-			if (direction != 1) {				
+			if (direction != 1 && traveled > 0) {				
 				direction = 3;
+				traveled = 0;
 			}
 		break;
 		case "A":
-			if (direction != 2) {				
+			if (direction != 2 && traveled > 0) {				
 				direction = 4;
+				traveled = 0;
 			}
 		break;
 		case "ArrowUp":
-			if (direction != 3) {				
+			if (direction != 3 && traveled > 0) {				
 				direction = 1;
+				traveled = 0;
 			}
 		break;
 		case "ArrowRight":
-			if (direction != 4) {				
+			if (direction != 4 && traveled > 0) {				
 				direction = 2;
+				traveled = 0;
 			}
 		break;
 		case "ArrowDown":
-			if (direction != 1) {				
+			if (direction != 1 && traveled > 0) {				
 				direction = 3;
+				traveled = 0;
 			}
 		break;
 		case "ArrowLeft":
-			if (direction != 1) {				
+			if (direction != 2 && traveled > 0) {				
 				direction = 4;
+				traveled = 0;
 			}
 		break;
 		default:
