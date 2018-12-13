@@ -1,12 +1,20 @@
 let canvas = document.getElementById("game");
 let ctx = canvas.getContext("2d");
 let imgX = 0;
-let morphX = 0;
-let morphY = 0;
-let morphWidth = 50;
-let morphHeight = 50;
+let morphX0 = 160;
+let morphY0 = 160;
+let morphW = 32;
+let morphH = 32;
+let direction = 1;
+let bodyparts = 1;
+let posXtemp;
+let posYtemp;
 
+let morphImgs = document.getElementById("morphID").getElementsByTagName("img");
+
+	
 function draw() {
+	/*
 	let fgImg = document.getElementById("fg-gfx");
 	let morphImg = document.getElementById("morph");
 
@@ -15,11 +23,26 @@ function draw() {
 	ctx.drawImage(fgImg, (imgX + 640), 0, 640, 480);
 
 	ctx.drawImage(morphImg, morphX, morphY, morphWidth, morphHeight);
-
-
-	imgX = imgX - 1;
-	if (imgX <= -640) {
-		imgX = 0;
+	*/
+	
+	for (let i = 0; i < bodyparts; i++) {
+		if (direction = 1) {
+			posYtemp = morphY0 - 32;
+			posXtemp = morphX0;
+		}
+		else if (direction = 2) {
+			posXtemp = morphX0 + 32;
+			posYtemp = morphY0;
+		}
+		else if (direction = 3) {
+			posYtemp = morphY0 + 32;
+			posXtemp = morphX0;
+		}
+		else if (direction = 4) {
+			posXtemp = morphX0 - 32;
+			posYtemp = morphY0;
+		}
+		ctx.drawImage(morphImgs[i], posXtemp, posYtemp, 32, 32);
 	}
 
 
@@ -27,36 +50,50 @@ function draw() {
 	window.requestAnimationFrame(draw);
 }
 
+
+
 document.addEventListener("keydown", function(e) {
-	//console.log(e.key);
+	console.log(e.key)
+	;
 	switch(e.key) {
-		case "s":
-			morphY += 10;
-		break;
 		case "w":
-			morphY -= 10;
+			direction = 1;
 		break;
 		case "d":
-			morphX += 10;
+			direction = 2;
+		break;
+		case "s":
+			direction = 3;
 		break;
 		case "a":
-			morphX -= 10;
+			direction = 4;
+		break;
+		case "W":
+			direction = 1;
+		break;
+		case "D":
+			direction = 2;
+		break;
+		case "S":
+			direction = 3;
+		break;
+		case "A":
+			direction = 4;
+		break;
+		case "ArrowUp":
+			direction = 1;
+		break;
+		case "ArrowRight":
+			direction = 2;
+		break;
+		case "ArrowDown":
+			direction = 3;
+		break;
+		case "ArrowLeft":
+			direction = 4;
 		break;
 		default:
-			// no
-	}
-	if (morphX < 0) {
-		morphX = 0;
-	}
-	if (morphY < 0) {
-		morphY = 0;
-	}
-	if (morphX > 640 - morphWidth) {
-		morphX = 640 - morphWidth;
-	}
-	if (morphY > 480 - morphHeight) {
-		morphY = 480 - morphHeight;
-	}
+	} 
 }, false);
 
 
