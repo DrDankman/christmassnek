@@ -5,12 +5,13 @@ let morphX0 = 160;
 let morphY0 = 160;
 let morphW = 32;
 let morphH = 32;
-let direction = 1;
+let direction = 2;
 let bodyparts = 1;
 let posXtemp;
 let posYtemp;
 
 let morphImgs = document.getElementById("morphID").getElementsByTagName("img");
+let foodImg = document.getElementById("julskinka");
 
 	
 function draw() {
@@ -26,71 +27,104 @@ function draw() {
 	*/
 	
 	for (let i = 0; i < bodyparts; i++) {
-		if (direction = 1) {
-			posYtemp = morphY0 - 32;
-			posXtemp = morphX0;
+		if (direction == 1) {
+			morphY0 -= 32;
 		}
-		else if (direction = 2) {
-			posXtemp = morphX0 + 32;
-			posYtemp = morphY0;
+		else if (direction == 2) {
+			morphX0 += 32;
 		}
-		else if (direction = 3) {
-			posYtemp = morphY0 + 32;
-			posXtemp = morphX0;
+		else if (direction == 3) {
+			morphY0 += 32;
 		}
-		else if (direction = 4) {
-			posXtemp = morphX0 - 32;
-			posYtemp = morphY0;
+		else if (direction == 4) {
+			morphX0 -= 32;
 		}
-		ctx.drawImage(morphImgs[i], posXtemp, posYtemp, 32, 32);
+
+		if (morphX0 > 640) {
+			morphX0 -= 640;
+		}
+		if (morphX0 < 0) {
+			morphX0 += 640;
+		}
+		if (morphY0 > 480) {
+			morphY0 -= 480;
+		}
+		if (morphY0 < 0) {
+			morphY0 += 480;
+		}
+
+		ctx.clearRect(0, 0, 640, 480);
+		ctx.drawImage(morphImgs[i], morphX0, morphY0, 32, 32);
 	}
-
-
-
-	window.requestAnimationFrame(draw);
 }
 
-
+setInterval(function() {
+			window.requestAnimationFrame(draw);
+		}, 200);
 
 document.addEventListener("keydown", function(e) {
 	console.log(e.key)
 	;
 	switch(e.key) {
 		case "w":
-			direction = 1;
+			if (direction != 3) {				
+				direction = 1;
+			}
 		break;
 		case "d":
-			direction = 2;
+			if (direction != 4) {				
+				direction = 2;
+			}
 		break;
 		case "s":
-			direction = 3;
+			if (direction != 1) {				
+				direction = 3;
+			}
 		break;
 		case "a":
-			direction = 4;
+			if (direction != 2) {				
+				direction = 4;
+			}
 		break;
 		case "W":
-			direction = 1;
+			if (direction != 3) {				
+				direction = 1;
+			}
 		break;
 		case "D":
-			direction = 2;
+			if (direction != 4) {				
+				direction = 2;
+			}
 		break;
 		case "S":
-			direction = 3;
+			if (direction != 1) {				
+				direction = 3;
+			}
 		break;
 		case "A":
-			direction = 4;
+			if (direction != 2) {				
+				direction = 4;
+			}
 		break;
 		case "ArrowUp":
-			direction = 1;
+			if (direction != 3) {				
+				direction = 1;
+			}
 		break;
 		case "ArrowRight":
-			direction = 2;
+			if (direction != 4) {				
+				direction = 2;
+			}
 		break;
 		case "ArrowDown":
-			direction = 3;
+			if (direction != 1) {				
+				direction = 3;
+			}
 		break;
 		case "ArrowLeft":
-			direction = 4;
+			if (direction != 1) {				
+				direction = 4;
+			}
 		break;
 		default:
 	} 
